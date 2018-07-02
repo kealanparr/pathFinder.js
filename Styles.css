@@ -1,0 +1,142 @@
+* { font-size: 15px; font-family: 'Roboto Slab', serif;  }
+html, body { height: 100%; width: 100%; margin: 0; }
+div { height: 100%; width: 100%; }
+button, form  { background-color: #6699ff; border: none; color: white; padding: 10px 11px; display: inline-block; margin-top: 0; }
+input[type="radio"]{-ms-transform: scale(0.7); /* IE 9 */ -webkit-transform: scale(0.7); /* Chrome, Safari, Opera */ transform: scale(1.5);}
+a { font-size: 30px;}
+
+/* Necessary to stop the grid having small seperations in them, when the information pops up. */
+#information {
+	margin: 0 0 0 0;
+}
+
+#main {
+    -webkit-user-select: none;  /* This (and all below stylings) are just to ensure we don't try to "highlight" the boxes. It leaves this blue highlight display isue that looks bad without the css override. */																																                 
+    -khtml-user-select: none;     
+    -moz-user-select: none;       
+    -ms-user-select: none;        
+    user-select: none;
+}
+
+.boxSmall {
+	display: inline-flex;
+	border: 2px solid black;
+	width: 	3%;
+	height: 3%;
+	margin-left: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	vertical-align: top;
+}
+
+.boxMedium {
+	display: inline-flex;
+	border: 2px solid black;
+	width: 	2%;
+	height: 2%;
+	margin-left: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	vertical-align: top;
+}
+
+.boxLarge {
+	display: inline-flex;
+	border: 2px solid black;
+	width: 	1.75%;
+	height: 1.75%;
+	margin-left: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	vertical-align: top;
+}
+
+.forwards {
+	height: 25%;
+	width: 25%;
+	float: right;
+	bottom: 0px;
+	position: absolute;
+	right: 0px;
+	font-size: 40px;
+	color: #5f6166;
+	line-height: 60px;
+}
+
+.backwards {
+	height: 25%;
+	width: 25%;
+	float: left;
+	bottom: 0px;
+	left: 0px;
+	position: absolute;
+	font-size: 40px;
+	color: #5f6166;
+	line-height: 60px;
+}
+
+.close {
+	width: 15%;
+	height: 20%;
+	float: right;
+	font-size: 40px;
+	position: static;
+	display: block;
+}
+
+.darkWash {
+	background-color: #333333;
+	opacity: 0.8;
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+	text-align: center;
+	font-size: 0;
+	display: inline-block; 
+	text-align: center;
+	width: 100%;
+}
+
+.obstacle {
+	background-color: black !important;
+}
+
+.start {
+	background-color: green !important; 
+}
+
+.end {
+	background-color: red !important;
+}
+
+.explored {
+	background-color: purple !important;
+}
+
+.tutorialText {
+    font-size: 30px;
+    height: 50%;
+    position: absolute;
+    bottom: 115px;
+}
+
+.XButton {
+	font-size: 30px;
+	margin-top: 5px;
+	color: #5f6166;
+	margin-bottom: 0px;
+}
+
+.tutorialBox {
+	background-color: #d3d3d3;
+	width: 40%; 
+	height: 40%;
+	margin: 0 auto;
+	min-width: 300px;
+	position: relative;
+}

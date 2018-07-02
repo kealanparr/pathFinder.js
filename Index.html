@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Djikstra vs A*</title>
+      <link rel="stylesheet" type="text/css" href="Styles.css">
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+   </head>
+   <body onload="Grid.Instruction()" >
+      <!-- Buttons for the size of the grid rendered -->
+      <div>
+         <form id="GridRender">
+            <input type="radio" name="gridSize" value="small" onchange="Grid.RenderGrid()"> Small
+            <input type="radio" name="gridSize" value="medium" onchange="Grid.RenderGrid()"> Medium
+            <input type="radio" name="gridSize" value="large" onchange="Grid.RenderGrid()"> Large
+         </form>
+         <!-- Define a start button on the grid -->
+         <button onclick="Grid.StartButton()" id="StartButton">Start</button>
+         <!-- Define an end button on the grid -->
+         <button onclick="Grid.EndButton()" id="EndButton">End</button>
+         <!-- Randomly generate obstacles in the grid the user rendered -->
+         <button onclick="Grid.RandomObstacleGeneration()" id="ObstacleGenerate">Random Generation</button>
+         <!-- Clear the grid if you've ran the algo once; want to start again, or done something you want to clear -->
+         <button onclick="Grid.ClearGrid()" id="ClearGrid">Clear grid</button>
+         <!-- Begin the Djikstra algorithm -->
+         <button class="algo" onclick="Algorithm.Djikstra()" id="Djikstra">Djikstra</button>
+         <!-- Begin the A* algorithm. -->
+         <button class="algo" onclick="Algorithm.AStar()" id="AStar">A*</button>
+         <br><br>
+         <!-- Information if the user does something impossible, stopwatch info too.--> 
+         <div id="main" class="container">
+            <p id="information"></p>
+         </div>
+      </div>
+   </body>
+   <script src="PathFinder.js"></script>
+</html>
