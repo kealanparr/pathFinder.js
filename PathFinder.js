@@ -1,20 +1,13 @@
-/*
 // This was my challenge to see how much I could do with Vanilla JS, without frameworks or libraries. I often see people sharing: http://youmightnotneedjquery.com/ and agree completely. 
 // The A* algorithm uses the Manhattan search to compute the distance, as I know people normally use either Manhattan or Eucledian.
 // I mainly chose path finding algorithms as a topic of study because I knew nothing about it, and enjoy a challenge, so picked what I would struggle with the most.
 
-
-Read JS
-bug test in tons of diff ways to search for bugs 
-post on facebook and in groups your hosting, heroku or codepen
-ask Mike for peer review
-*/
 "use strict"; // I program in TypeScript where I work, so quite liked the errors thrown, kind of like a compiler, as it caught some bugs early.
 
 // Some global variables that made the whole programme running simpler. Kept to a minimum.
-var number, // Number of rows + columns
+var number,         // Number of rows + columns
     startIndex = 0, // Start index on the grid
-    endIndex = 0; // End index on the grid     
+    endIndex = 0;   // End index on the grid     
 
 // I removed the oncontextmenu because in the site, it's very unaesthetic and ugly.
 // It only obscured the grid, and provided poor UX.
@@ -80,7 +73,7 @@ const Grid = {
     DeleteGrid: function() {
         const grid = document.querySelectorAll('.boxSmall, .boxMedium, .boxLarge, br');
         for (let i = 0; i < grid.length; i++) {
-            var elem = grid[i];
+            let elem = grid[i];
             elem.parentNode.removeChild(elem);
         }
     },
@@ -91,7 +84,7 @@ const Grid = {
         const grid = document.querySelectorAll('.boxSmall, .boxMedium, .boxLarge');
         if (grid.length) { // Just check the grid has been rendered. Or else we will warn the user they need to render a grid first
             for (let i = 0; i < grid.length; i++) {
-                var highlight = (Math.round((Math.random()) * 100) / 100) // Generare a random number
+                let highlight = (Math.round((Math.random()) * 100) / 100) // Generare a random number
                 if (highlight > 0.75) {
                     grid[i].classList.add("obstacle")
                     grid[i].heuristic = Infinity; // For the A* algo, we can quickly add the heuristic.
@@ -150,7 +143,7 @@ const Grid = {
 
                 if (i === 1) {
                     div.leftEdge = true;
-                    var linebreak = document.createElement("br"); // Push the next row onto a new line
+                    let linebreak = document.createElement("br"); // Push the next row onto a new line
                     document.getElementById("main").appendChild(linebreak);
                 } else if (i === number) {
                     div.rightEdge = true;
@@ -245,7 +238,7 @@ const Grid = {
             for (let i = 0; i < grid.length; i++) {
                 if (grid[i].classList.contains("start")) {
                     isThereAlreadyAStartDefined = true;
-                    document.getElementById("information").innerHTML = "Please only define one start point.";
+                    document.getElementById("information").innerHTML = "You cannot place more than one start/end point";
                 }
             }
             if (!isThereAlreadyAStartDefined) {
@@ -267,7 +260,7 @@ const Grid = {
             for (let i = 0; i < grid.length; i++) {
                 if (grid[i].classList.contains("end")) {
                     isThereAlreadyAnEndDefined = true;
-                    document.getElementById("information").innerHTML = "Please only define one end point.";
+                    document.getElementById("information").innerHTML = "You cannot place more than one start/end point";
                 }
             }
             if (!isThereAlreadyAnEndDefined) {
@@ -424,7 +417,7 @@ const Algorithm = {
             // Always hit the first four around the start point irregardless of heurstic score.
             // Do the initial hit around the start point.
             // Up, down, left, right.
-            Algorithm.InitialHit(grid);
+            Algorithm.InitialHit(grid, "A*");
 
             // Recursively visualise Djikstra. We have the necesary start point. 
             Algorithm.RecurseAStar(grid, timeStart, info);
@@ -451,7 +444,7 @@ const Algorithm = {
 
             // Do the initial hit around the start point.
             // Up, down, left, right.
-            setTimeout(Algorithm.InitialHit(grid, ), 125);
+            setTimeout(Algorithm.InitialHit(grid, "Djikstra"), 125);
 
             // Recursively visualise Djikstra. We have the necesary start point. 
             Algorithm.RecurseDjikstra(grid, timeStart, info);
@@ -461,15 +454,16 @@ const Algorithm = {
     /*<Summary> Does some basic formating for the stopwatch, and appends it to the DOM. 
     <timeStart> The start of the stopwatch.
     <stopW>     The DOM element where we can append the total time it took. 
+    <algorithm> This method deals with the success of Djikstra and A*, so we override the string depending on what algorithm ran.
     */
-    Success: function(timeStart, info) {
+    Success: function(timeStart, info, algorithm) {
 
         // Stop the stopwatch, change from miliseconds into seconds, and format it to 2dp.
         let timeEnd = performance.now();
         const totalTime = ((timeEnd - timeStart) / 1000).toFixed(2);
 
         // Add it to the screen, and allow the user to interact with the DOM again.
-        info.innerHTML = "Djikstra's algorithm took " + totalTime + " seconds.";
+        info.innerHTML = algorithm + "'s algorithm took " + totalTime + " seconds.";
         main.style.pointerEvents = "auto";
     },
 
@@ -558,7 +552,7 @@ const Algorithm = {
         if (!endTheAlgorithm) { // These 3 last parameters are to be passed to my Recurse method
             setTimeout(Algorithm.RecurseDjikstra, 125, grid, timeStart, info)
         } else {
-            Algorithm.Success(timeStart, info);
+            Algorithm.Success(timeStart, info, "Djikstra");
         }
     },
 
@@ -607,8 +601,9 @@ const Algorithm = {
 
     /*<Summary>  Finds the start point on the grid, and hits the beginning points where applicable. One up, down, left and right (so long as no obstacles there).  Abstracted away to be used across A* and Djikstra. 
     <grid>      -The entire grid.
+    <algorithm> A string used in the Success() method, where we append either "Djikstra's algo took ...." or "A* took ...."
     */
-    InitialHit: function(grid) {
+    InitialHit: function(grid, algorithm) {
 
         const start = grid[startIndex],
             up = grid[startIndex - number],
@@ -623,7 +618,7 @@ const Algorithm = {
         for (let i = 0; i < directions.length; i++) {
             if (directions[i]) { // Becuase we added all of them to the directions array, an element (if were on the top or bottom row) may be undefined, and throw errors when we try to examine the id property.
                 if (directions[i].id === endIndex) {
-                    Algorithm.Success(timeStart, info);
+                    Algorithm.Success(timeStart, info, algorithm);
                     return;
                 }
             }
@@ -789,7 +784,7 @@ const Algorithm = {
         if (!endTheAlgorithm) { // These 3 last parameters are to be passed to my Recurse method
             setTimeout(Algorithm.RecurseAStar, 125, grid, timeStart, info)
         } else {
-            Algorithm.Success(timeStart, info);
+            Algorithm.Success(timeStart, info, "A*");
         }
     },
 
@@ -805,5 +800,18 @@ const Algorithm = {
             }
         }
         return true;
+    },
+
+    /*<Summary> This was used for when the user ran an algorithm once (say Djikstra), then pressed A* without clearing the grid, or changing beginning or end square to see how the different algorithm did the same path 
+    <grid> The entire grid rendered
+    */
+    ClearGridOfSearchTiles : function (grid){
+        // Don't remove anything, except searched tiles! Obstacles, start and end all stay!
+        for(let i=0; i < grid.length; i++){
+            if(grid[i].classList.contains("explored")){
+                grid[i].classList.remove("explored");
+            }
+        }
     }
 }
+    

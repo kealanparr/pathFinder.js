@@ -43,8 +43,8 @@ a { font-size: 30px;}
 .boxLarge {
 	display: inline-flex;
 	border: 2px solid black;
-	width: 	1.75%;
-	height: 1.75%;
+	width: 	1.9%;
+	height: 1.9%;
 	margin-left: 0;
 	margin-bottom: 0;
 	padding-bottom: 0;
@@ -122,7 +122,7 @@ a { font-size: 30px;}
     font-size: 30px;
     height: 50%;
     position: absolute;
-    bottom: 115px;
+    bottom: 25%;
 }
 
 .XButton {
@@ -135,7 +135,7 @@ a { font-size: 30px;}
 .tutorialBox {
 	background-color: #d3d3d3;
 	width: 40%; 
-	height: 40%;
+	height: 85%;
 	margin: 0 auto;
 	min-width: 300px;
 	position: relative;
